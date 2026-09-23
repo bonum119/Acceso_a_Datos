@@ -1,8 +1,11 @@
+import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ConsolaUI {
 Scanner sc = new Scanner(System.in);
 GasolineraGestor gestor = new GasolineraGestor();
+private List<Cliente> clientes;
 
     public void iniciar(){
         boolean terminar = false;
@@ -15,16 +18,16 @@ GasolineraGestor gestor = new GasolineraGestor();
                     darDeAltaCliente();
                     break;
                 case "2":
-                    //listarClientes();
+                    listarClientes();
                     break;
                 case "3":
-                    //buscarClientes();
+                    buscarClientes();
                     break;
                 case "4":
-                   // procesarPago();
+                    procesarPago();
                     break;
                 case "5":
-                   // consultarPagos();
+                    consultarPagos();
                     break;
                 case "0":
                     terminar = true;
@@ -37,18 +40,38 @@ GasolineraGestor gestor = new GasolineraGestor();
         }
     }
 
+    private void consultarPagos() {
+
+    }
+
+    private void procesarPago() {
+        
+    }
+
+    private void buscarClientes() {
+        System.out.println("Escriba la matrícula a buscar: ");
+        String matricula = sc.nextLine();
+
+        gestor.buscarMatricula(matricula);
+    }
+
+    private void listarClientes() {
+        System.out.println("\n=== LISTA DE CLIENTES ===");
+        gestor.mostrarClientes();
+    }
+
     private void darDeAltaCliente() {
         String nombre = leerTexto("Nombre: ");
         String telefono = leerTexto("Teléfono: ");
         String matricula = leerTexto("Matrícula: ").toUpperCase();
 
-        if (gestor.matriculaRegistrada(matricula)) {
+        if (gestor.matriculaRegistrada(matricula.toUpperCase(Locale.ROOT))) {
             System.out.println("Esa matrícula ya está registrada. No se ha creado el cliente.");
             return;
         }
 
-        Cliente cliente = gestor.altaCliente(nombre, telefono, matricula);
-        System.out.println("Cliente registrado con ID " + cliente.getId() + ".");
+        gestor.altaCliente(nombre, telefono, matricula);
+        System.out.println("Cliente registrado con ID ");
     }
 
     private String leerTexto(String etiqueta) {
