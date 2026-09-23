@@ -3,13 +3,13 @@ import java.time.LocalDate;
 public class Pago {
 
     private int id;
-    private int idCliente;
+    private String idCliente;
     private LocalDate fecha;
     private double importe;
     private double litros;
     private String combustible;
 
-    public Pago(int id, int idCliente, LocalDate fecha, double importe, double litros, String combustible) {
+    public Pago(int id, String idCliente, LocalDate fecha, double importe, double litros, String combustible) {
         this.id = id;
         this.idCliente = idCliente;
         this.fecha = fecha;
@@ -26,11 +26,11 @@ public class Pago {
         this.id = id;
     }
 
-    public int getIdCliente() {
+    public String getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -64,5 +64,10 @@ public class Pago {
 
     public void setCombustible(String combustible) {
         this.combustible = combustible;
+    }
+
+    @Override
+    public String toString(){
+        return  "ID: " + id + " ID Cliente: " + idCliente + " Fecha: " + fecha + " Importe: " + importe + " Litros: " + litros + " Combustible: " + combustible;
     }
 }

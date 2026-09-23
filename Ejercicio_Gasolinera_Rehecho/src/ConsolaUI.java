@@ -1,11 +1,16 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class ConsolaUI {
-Scanner sc = new Scanner(System.in);
-GasolineraGestor gestor = new GasolineraGestor();
-private List<Cliente> clientes;
+
+    Scanner sc = new Scanner(System.in);
+    GasolineraGestor gestor = new GasolineraGestor();
+    private List clientes;
+    LocalDate fecha;
 
     public void iniciar(){
         boolean terminar = false;
@@ -41,11 +46,23 @@ private List<Cliente> clientes;
     }
 
     private void consultarPagos() {
-
+        System.out.println("\n=== LISTA DE PAGOS ===");
+        gestor.mostrarPagos();
     }
 
     private void procesarPago() {
-        
+        String idCliente = leerTexto("ID del cliente: ");
+
+        while (!gestor.buscarId(idCliente)) {
+            idCliente = leerTexto("ID no encontrado, pruebe de nuevo: ");
+        }
+
+        LocalDate fecha = leerFecha("Fecha (YYYY-MM-DD, Vacio para hoy): ");
+        double importe = leerDouble("Importe: ");
+        double litros = leerDouble("Litros: ");
+        String combustible = leerTexto("Combustible: ");
+
+        gestor.altaPago(idCliente, fecha, importe, litros, combustible);
     }
 
     private void buscarClientes() {
@@ -71,7 +88,7 @@ private List<Cliente> clientes;
         }
 
         gestor.altaCliente(nombre, telefono, matricula);
-        System.out.println("Cliente registrado con ID ");
+        System.out.println("Cliente registrado correctamente.");
     }
 
     private String leerTexto(String etiqueta) {
@@ -83,6 +100,28 @@ private List<Cliente> clientes;
             }
             System.out.println("Este campo es obligatorio.");
         }
+    }
+
+    private double leerDouble(String etiqueta) {
+        while (true) {
+            try {
+                System.out.print(etiqueta);
+                double valor = Double.parseDouble(sc.nextLine());
+                return valor;
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, introduzca un número válido.");
+            }
+        }
+    }
+
+    private LocalDate leerFecha(String etiqueta) {
+        System.out.print(etiqueta);
+        String entrada = sc.nextLine();
+        if (entrada.trim().isEmpty()) {
+            System.out.println("Se ha asignado la fecha de hoy.");
+            return LocalDate.now();
+        }
+        return LocalDate.parse(entrada);
     }
 
     private void mostrarmenu() {
