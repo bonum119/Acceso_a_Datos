@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class GasolineraGestor {
@@ -8,12 +9,34 @@ public class GasolineraGestor {
     private List<Pago> pagos;
     private int contadorId;
     private int contadorPagoId;
+    private final GestorArchivos gestorArchivos;
 
     public GasolineraGestor() {
-        this.clientes = new ArrayList<>();
-        this.pagos = new ArrayList<>(); // Inicialización agregada
-        this.contadorId = 1;
-        this.contadorPagoId = 1;
+        this.gestorArchivos = new GestorArchivosCSV();
+        this.clientes = gestorArchivos.leerClientes();
+        this.pagos = gestorArchivos.leerPagos();
+        this.contadorId = calcularSiguienteId();
+        this.contadorPagoId = calcularSiguientePagoId();
+    }
+
+    private int calcularSiguienteId() {
+        int maximo = 0;
+        for (Cliente c : clientes) {
+            if (c.getId() > maximo) {
+                maximo = c.getId();
+            }
+        }
+        return maximo + 1;
+    }
+
+    private int calcularSiguientePagoId() {
+        int maximo = 0;
+        for (Pago p : pagos) {
+            if (p.getId() > maximo) {
+                maximo = p.getId();
+            }
+        }
+        return maximo + 1;
     }
 
     public boolean matriculaRegistrada(String matricula) {
@@ -36,6 +59,7 @@ public class GasolineraGestor {
         } else {
             Cliente nuevoCliente = new Cliente(contadorId++, nombre, telefono, matricula);
             clientes.add(nuevoCliente);
+            gestorArchivos.guardarClientes(clientes);
         }
     }
 
@@ -45,8 +69,8 @@ public class GasolineraGestor {
             return;
         }
 
-        for (Cliente cliente : clientes) {
-            System.out.println(cliente);
+        for (Cliente c : clientes) {
+            System.out.println(c);
         }
         System.out.println();
     }
@@ -67,22 +91,25 @@ public class GasolineraGestor {
     }
 
     public boolean buscarId(String id) {
+        try {
             int idNum = Integer.parseInt(id);
-            for (Cliente c : clientes){
-                if (c.getId() == idNum){
+            for (Cliente c : clientes) {
+                if (c.getId() == idNum) {
                     System.out.println("Cliente encontrado: ");
                     System.out.println(c);
                     return true;
                 }
             }
-
-        System.out.println("No existe el cliente");
+        } catch (NumberFormatException ex){
+            return false;
+        }
         return false;
     }
 
     public void altaPago(String idCliente, LocalDate fecha, double importe, double litros, String combustible) {
         Pago nuevoPago = new Pago(contadorPagoId++, idCliente, fecha, importe, litros, combustible);
         pagos.add(nuevoPago);
+        gestorArchivos.guardarPagos(pagos);
     }
 
     public void mostrarPagos() {
@@ -92,8 +119,20 @@ public class GasolineraGestor {
         }
 
         for (Pago p : pagos) {
-            System.out.println(p);
+            String nombreCliente = obtenerNombreCliente(p.getIdCliente());
+            System.out.printf("ID: %d Cliente: %s Fecha: %s Importe: %.2f € Litros: %.2f Combustible: %s%n",
+                    p.getId(), nombreCliente, p.getFecha(), p.getImporte(), p.getLitros(), p.getCombustible());
         }
         System.out.println();
+    }
+
+    private String obtenerNombreCliente(String idCliente) {
+        int idNum = Integer.parseInt(idCliente);
+        for (Cliente c : clientes) {
+            if (c.getId() == idNum) {
+                return c.getNombre();
+            }
+        }
+        return "Desconocido";
     }
 }

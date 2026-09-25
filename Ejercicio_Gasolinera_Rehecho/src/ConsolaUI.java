@@ -115,13 +115,18 @@ public class ConsolaUI {
     }
 
     private LocalDate leerFecha(String etiqueta) {
-        System.out.print(etiqueta);
-        String entrada = sc.nextLine();
-        if (entrada.trim().isEmpty()) {
-            System.out.println("Se ha asignado la fecha de hoy.");
-            return LocalDate.now();
+        try {
+            System.out.print(etiqueta);
+            String entrada = sc.nextLine();
+            if (entrada.trim().isEmpty()) {
+                System.out.println("Se ha asignado la fecha de hoy.");
+                return LocalDate.now();
+            }
+            return LocalDate.parse(entrada);
+        } catch (DateTimeParseException ex){
+            System.out.println("Error, se pondrá la fecha actual.");
         }
-        return LocalDate.parse(entrada);
+        return LocalDate.now();
     }
 
     private void mostrarmenu() {
