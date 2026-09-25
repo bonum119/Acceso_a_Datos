@@ -1,5 +1,8 @@
 import java.util.List;
 
 public interface GestorArchivos {
-    public List<Cliente> leerClientes();
+    List leerClientes();
+    void guardarClientes(List clientes);
+    List leerPagos();
+    void guardarPagos(List pagos);
 }
