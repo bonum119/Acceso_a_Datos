@@ -101,10 +101,9 @@ public class GasolineraGestor {
     }
 
     private boolean coincide(Cliente c, String busqueda) {
-        String sinEspacios = busqueda.replace(" ", "");
         return String.valueOf(c.getId()).equals(busqueda)
                 || c.getNombre().toLowerCase().contains(busqueda.toLowerCase())
-                || c.getTelefono().replace(" ", "").equals(sinEspacios)
+                || c.getTelefono().trim().equals(busqueda)
                 || c.getMatricula().equalsIgnoreCase(busqueda);
     }
 
