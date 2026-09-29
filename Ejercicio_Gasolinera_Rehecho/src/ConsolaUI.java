@@ -66,10 +66,8 @@ public class ConsolaUI {
     }
 
     private void buscarClientes() {
-        System.out.println("Escriba la matrícula a buscar: ");
-        String matricula = sc.nextLine();
-
-        gestor.buscarMatricula(matricula);
+        String busqueda = leerTexto("Buscar cliente: ");
+        gestor.buscarCliente(busqueda);
     }
 
     private void listarClientes() {

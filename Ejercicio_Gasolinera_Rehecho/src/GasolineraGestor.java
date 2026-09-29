@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Comparator;
 
 public class GasolineraGestor {
 
@@ -75,19 +76,36 @@ public class GasolineraGestor {
         System.out.println();
     }
 
-    public void buscarMatricula(String matricula) {
+    public void buscarCliente(String criterio) {
+        String busqueda = criterio == null ? "" : criterio.trim();
+        if (busqueda.isEmpty()) {
+            System.out.println("Debe introducir un criterio de búsqueda.");
+            return;
+        }
+
         boolean encontrado = false;
-        for (Cliente c : clientes){
-            if (matricula.equalsIgnoreCase(c.getMatricula())){
-                System.out.println("Cliente encontrado: ");
+        for (Cliente c : clientes) {
+            if (coincide(c, busqueda)) {
+                if (!encontrado) {
+                    System.out.println("Clientes encontrados:");
+                }
                 System.out.println(c);
                 encontrado = true;
-                break;
             }
         }
+
         if (!encontrado) {
-            System.out.println("No esta la matrícula registrada");
+            System.out.println("No se ha encontrado ningún cliente con ese dato.");
         }
+        System.out.println();
+    }
+
+    private boolean coincide(Cliente c, String busqueda) {
+        String sinEspacios = busqueda.replace(" ", "");
+        return String.valueOf(c.getId()).equals(busqueda)
+                || c.getNombre().toLowerCase().contains(busqueda.toLowerCase())
+                || c.getTelefono().replace(" ", "").equals(sinEspacios)
+                || c.getMatricula().equalsIgnoreCase(busqueda);
     }
 
     public boolean buscarId(String id) {
@@ -118,7 +136,10 @@ public class GasolineraGestor {
             return;
         }
 
-        for (Pago p : pagos) {
+        List<Pago> ordenados = new ArrayList<>(pagos);
+        ordenados.sort((a, b) -> b.getFecha().compareTo(a.getFecha()));
+
+        for (Pago p : ordenados) {
             String nombreCliente = obtenerNombreCliente(p.getIdCliente());
             System.out.printf("ID: %d Cliente: %s Fecha: %s Importe: %.2f € Litros: %.2f Combustible: %s%n",
                     p.getId(), nombreCliente, p.getFecha(), p.getImporte(), p.getLitros(), p.getCombustible());

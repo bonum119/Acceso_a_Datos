@@ -49,7 +49,6 @@ public class GestorArchivosCSV implements GestorArchivos {
                 String[] campos = linea.split(",");
                 if (campos.length != 4) {
                     System.err.println("Error al leer cliente: " + linea);
-                    System.exit(1);
                 }
                 try {
                     int id = Integer.parseInt(campos[0].trim());
@@ -59,7 +58,6 @@ public class GestorArchivosCSV implements GestorArchivos {
                     clientes.add(new Cliente(id, nombre, telefono, matricula));
                 } catch (NumberFormatException e) {
                     System.err.println("Error: " + linea);
-                    System.exit(1);
                 }
             }
         } catch (IOException e) {
