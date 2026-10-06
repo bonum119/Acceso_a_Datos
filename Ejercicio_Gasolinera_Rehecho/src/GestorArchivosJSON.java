@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -96,9 +97,30 @@ public class GestorArchivosJSON implements GestorArchivos {
         if (Files.notExists(rutaPagos)) return pagos;
 
         try (BufferedReader lector = Files.newBufferedReader(rutaPagos)) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                if (linea.equals("\t[")||linea.equals("\t]")||linea.equals("{")||linea.equals("}")||linea.isBlank()) continue;
 
+                linea = linea.replace("{", "").replace("\"", "");
+                linea = linea.replace("}", "").replace("\"", "");
+                String[] campos = linea.split(",");
+                if (campos.length != 4) {
+                    System.err.println("Error al leer cliente: " + linea);
+                }
+                try {
+                    int id = Integer.parseInt(campos[0].split(":")[1].trim());
+                    String idCliente = campos[1].trim();
+                    LocalDate fecha = LocalDate.parse(campos[2].split(":")[1].trim());
+                    double importe = Double.parseDouble(campos[3].split(":")[1].trim());
+                    double litros = Double.parseDouble(campos[4].split(":")[1].trim());
+                    String combustible = campos[5].split(":")[1].trim();
+                    pagos.add(new Pago(id, idCliente, fecha, importe, litros, combustible));
+                } catch (NumberFormatException e) {
+                    System.err.println("Error: " + linea);
+                }
+            }
         } catch (IOException e) {
-            System.err.println("Error de lectura en pagos: " + e.getMessage());
+            System.err.println("Error de lectura en clientes: " + e.getMessage());
             System.exit(1);
         }
         return pagos;
@@ -106,15 +128,19 @@ public class GestorArchivosJSON implements GestorArchivos {
 
     @Override
     public void guardarPagos(List<Pago> pagos) {
-        try (BufferedWriter escritor = Files.newBufferedWriter(rutaPagos)) {
+        try (BufferedWriter escritor = Files.newBufferedWriter(rutaClientes)) {
+            escritor.write("{\n");
+            escritor.write("\t[\n");
             for (Pago p : pagos) {
-                String linea = "{\"id\" " + p.getId() + ",\"idCliente\" " + p.getIdCliente() + ",\"fecha\" " + p.getFecha()
-                        + ",\"importe\" " + p.getImporte() + ",\"litros\" " + p.getLitros() + ",\"combustible\" " + p.getCombustible() + "}";
+                String linea = "\t  {\"id\": " + p.getId() + ", \"idCliente\": \"" + p.getIdCliente() + "\", \"fecha\": \""
+                        + p.getFecha() + "\", \"importe\": \"" + p.getImporte() + "\", \"litros\": \"" + p.getLitros() + "\", \"combustible\": \"" + p.getCombustible() + "\"}";
                 escritor.write(linea);
                 escritor.newLine();
             }
+            escritor.write("\t]\n");
+            escritor.write("}");
         } catch (IOException e) {
-            System.err.println("Error al guardar pagos: " + e.getMessage());
+            System.err.println("Error al guardar clientes: " + e.getMessage());
         }
     }
 
