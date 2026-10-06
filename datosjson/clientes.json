@@ -1,5 +1,7 @@
 {
 	[
 	  {"id": 1, "nombre": "Nicolas", "telefono": "23480322", "matricula": "4833VCS"}
+	  {"id": 2, "nombre": "Peter", "telefono": "13242354", "matricula": "3434FSD"}
+	  {"id": 3, "nombre": "Leo", "telefono": "678944867", "matricula": "2229JPS"}
 	]
 }
