@@ -1,6 +1,8 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -12,35 +14,28 @@ public class ConsolaUI {
     private List clientes;
     LocalDate fecha;
 
-    public void iniciar(){
+    public void iniciar() {
         boolean terminar = false;
 
-        while (!terminar){
-            mostrarmenu();
-            String opcion = sc.nextLine();
-            switch (opcion) {
-                case "1":
-                    darDeAltaCliente();
-                    break;
-                case "2":
-                    listarClientes();
-                    break;
-                case "3":
-                    buscarClientes();
-                    break;
-                case "4":
-                    procesarPago();
-                    break;
-                case "5":
-                    consultarPagos();
-                    break;
-                case "0":
-                    terminar = true;
-                    System.out.println("Hasta pronto.");
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
-                    break;
+        while (!terminar) {
+            try {
+                mostrarmenu();
+                int opcion = sc.nextInt();
+                switch (opcion) {
+                    case 1 -> darDeAltaCliente();
+                    case 2 -> listarClientes();
+                    case 3 -> buscarClientes();
+                    case 4 -> procesarPago();
+                    case 5 -> consultarPagos();
+                    case 0 -> {
+                        terminar = true;
+                        System.out.println("Hasta pronto.");
+                    }
+                    default -> System.out.println("Opción no válida.");
+                }
+            } catch (InputMismatchException ex) {
+                sc.next();
+                System.out.println("Opción no válida");
             }
         }
     }
@@ -121,7 +116,7 @@ public class ConsolaUI {
                 return LocalDate.now();
             }
             return LocalDate.parse(entrada);
-        } catch (DateTimeParseException ex){
+        } catch (DateTimeParseException ex) {
             System.out.println("Error, se pondrá la fecha actual.");
         }
         return LocalDate.now();

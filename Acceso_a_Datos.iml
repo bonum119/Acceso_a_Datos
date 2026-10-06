@@ -4,6 +4,7 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/Ejercicio_Gasolinera_Arreglado/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ficheros-binarios-java/contents/ficherosBinarios/01_Bytes/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
