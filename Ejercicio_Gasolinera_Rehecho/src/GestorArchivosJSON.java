@@ -41,23 +41,46 @@ public class GestorArchivosJSON implements GestorArchivos {
     @Override
     public List leerClientes() {
         List clientes = new ArrayList<>();
-        for(Map<String, String> objeto : leerObjetos(rutaClientes)){
-            try {
-                int id = Integer.parseInt(campo(objeto, "id"));
-                clientes.add(new Cliente(id, campo (objeto, "nombre"), campo(objeto, "telefono"), campo(objeto, "matricula")));
-            }catch (IOException e){
-                System.out.println("Error: " + e);
+        if (Files.notExists(rutaClientes)) return clientes;
+
+        try (BufferedReader lector = Files.newBufferedReader(rutaClientes)) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                if (linea.isBlank()) continue;
+
+                String[] campos = linea.split(",");
+                if (campos.length != 4) {
+                    System.err.println("Error al leer cliente: " + linea);
+                }
+                try {
+                    int id = Integer.parseInt(campos[0].trim());
+                    String nombre = campos[1].trim();
+                    String telefono = campos[2].trim();
+                    String matricula = campos[3].trim();
+                    clientes.add(new Cliente(id, nombre, telefono, matricula));
+                } catch (NumberFormatException e) {
+                    System.err.println("Error: " + linea);
+                }
             }
+        } catch (IOException e) {
+            System.err.println("Error de lectura en clientes: " + e.getMessage());
+            System.exit(1);
         }
+        return clientes;
     }
 
     @Override
-    public boolean guardarClientes(List<Cliente> clientes) {
-        List<String> objetos = new ArrayList<>();
-        for (Cliente c : clientes){
-            objetos.add("\n\t{\"id\": " + c.getId() + ", \"nombre\": " + c.getNombre() + ", \"telefono\": " + c.getTelefono() + ", \"matricula\": " + c.getMatricula() + "}");
+    public void guardarClientes(List<Cliente> clientes) {
+        try (BufferedWriter escritor = Files.newBufferedWriter(rutaClientes)) {
+            for (Cliente c : clientes) {
+                String linea = "\t{\"id\": " + c.getId() + ", \"nombre\": " + c.getNombre() + ", \"telefono\": "
+                        + c.getTelefono() + ", \"matricula\": " + c.getMatricula() + "}";
+                escritor.write(linea);
+                escritor.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error al guardar clientes: " + e.getMessage());
         }
-        return escribir(objetos);
     }
 
     //PAGOS--------------------------------------------
@@ -79,8 +102,8 @@ public class GestorArchivosJSON implements GestorArchivos {
     public void guardarPagos(List<Pago> pagos) {
         try (BufferedWriter escritor = Files.newBufferedWriter(rutaPagos)) {
             for (Pago p : pagos) {
-                String linea = "\"id\" " + p.getId() + ",\"idCliente\" " + p.getIdCliente() + ",\"fecha\" " + p.getFecha()
-                        + ",\"importe\" " + p.getImporte() + ",\"litros\" " + p.getLitros() + ",\"combustible\" " + p.getCombustible();
+                String linea = "{\"id\" " + p.getId() + ",\"idCliente\" " + p.getIdCliente() + ",\"fecha\" " + p.getFecha()
+                        + ",\"importe\" " + p.getImporte() + ",\"litros\" " + p.getLitros() + ",\"combustible\" " + p.getCombustible() + "}";
                 escritor.write(linea);
                 escritor.newLine();
             }
@@ -89,20 +112,4 @@ public class GestorArchivosJSON implements GestorArchivos {
         }
     }
 
-    //ESCRIBIR--------------------------------------------
-
-    private boolean escribir (List<String> clientes){
-        try (BufferedWriter escritor = Files.newBufferedWriter(rutaClientes)) {
-            String linea = "";
-            escritor.write(linea);
-            escritor.newLine();
-        } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-    }
-
-    //LEER------------------------------------------------
-    private Map<String, String>[] leerObjetos(Path rutaClientes) {
-        if(Files.notExists(rutaClientes)) return new ArrayList<>();
-    }
 }
