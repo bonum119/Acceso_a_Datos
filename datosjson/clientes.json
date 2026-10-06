@@ -1,8 +1,5 @@
 {
 	[
-	  {"id": 1, "nombre": "so", "telefono": "so", "matricula": "SO"}
-	  {"id": 2, "nombre": "si", "telefono": "si", "matricula": "SI"}
-	  {"id": 3, "nombre": "Marcock", "telefono": "1273", "matricula": "FAUW"}
-	  {"id": 4, "nombre": "fdsaa", "telefono": "12348", "matricula": "1289DAS"}
+	  {"id": 1, "nombre": "Nicolas", "telefono": "23480322", "matricula": "4833VCS"}
 	]
 }

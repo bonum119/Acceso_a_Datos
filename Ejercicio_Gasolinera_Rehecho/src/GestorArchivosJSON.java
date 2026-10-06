@@ -20,7 +20,7 @@ public class GestorArchivosJSON implements GestorArchivos {
 
     private void asegurarRuta() {
         try {
-            Path directorio = Path.of("datosjson");
+            Path directorio = Path.of("datojson");
             if (Files.notExists(directorio)) {
                 Files.createDirectories(directorio);
             }
@@ -104,12 +104,12 @@ public class GestorArchivosJSON implements GestorArchivos {
                 linea = linea.replace("{", "").replace("\"", "");
                 linea = linea.replace("}", "").replace("\"", "");
                 String[] campos = linea.split(",");
-                if (campos.length != 4) {
+                if (campos.length != 6) {
                     System.err.println("Error al leer cliente: " + linea);
                 }
                 try {
                     int id = Integer.parseInt(campos[0].split(":")[1].trim());
-                    String idCliente = campos[1].trim();
+                    String idCliente = campos[1].split(":")[1].trim();
                     LocalDate fecha = LocalDate.parse(campos[2].split(":")[1].trim());
                     double importe = Double.parseDouble(campos[3].split(":")[1].trim());
                     double litros = Double.parseDouble(campos[4].split(":")[1].trim());
@@ -128,7 +128,7 @@ public class GestorArchivosJSON implements GestorArchivos {
 
     @Override
     public void guardarPagos(List<Pago> pagos) {
-        try (BufferedWriter escritor = Files.newBufferedWriter(rutaClientes)) {
+        try (BufferedWriter escritor = Files.newBufferedWriter(rutaPagos)) {
             escritor.write("{\n");
             escritor.write("\t[\n");
             for (Pago p : pagos) {
