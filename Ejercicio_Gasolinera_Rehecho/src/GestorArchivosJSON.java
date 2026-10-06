@@ -46,8 +46,9 @@ public class GestorArchivosJSON implements GestorArchivos {
         try (BufferedReader lector = Files.newBufferedReader(rutaClientes)) {
             String linea;
             while ((linea = lector.readLine()) != null) {
-                if (linea.isBlank()) continue;
+                if (linea.equals("[")||linea.equals("]")|linea.isBlank()) continue;
 
+                linea = linea.replace("{", "").replace("\"", "");
                 String[] campos = linea.split(",");
                 if (campos.length != 4) {
                     System.err.println("Error al leer cliente: " + linea);
@@ -73,8 +74,8 @@ public class GestorArchivosJSON implements GestorArchivos {
     public void guardarClientes(List<Cliente> clientes) {
         try (BufferedWriter escritor = Files.newBufferedWriter(rutaClientes)) {
             for (Cliente c : clientes) {
-                String linea = "{\n\t[\n" + "\t\t{\"id\": " + c.getId() + ", \"nombre\": " + c.getNombre() + ", \"telefono\": "
-                        + c.getTelefono() + ", \"matricula\": " + c.getMatricula() + "}" + "\n\t]\n}";
+                String linea = "\t{\"id\": " + c.getId() + ", \"nombre\": " + c.getNombre() + ", \"telefono\": "
+                        + c.getTelefono() + ", \"matricula\": " + c.getMatricula() + "}";
                 escritor.write(linea);
                 escritor.newLine();
             }
