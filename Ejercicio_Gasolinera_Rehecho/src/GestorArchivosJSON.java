@@ -73,8 +73,8 @@ public class GestorArchivosJSON implements GestorArchivos {
     public void guardarClientes(List<Cliente> clientes) {
         try (BufferedWriter escritor = Files.newBufferedWriter(rutaClientes)) {
             for (Cliente c : clientes) {
-                String linea = "\t{\"id\": " + c.getId() + ", \"nombre\": " + c.getNombre() + ", \"telefono\": "
-                        + c.getTelefono() + ", \"matricula\": " + c.getMatricula() + "}";
+                String linea = "{\n\t[\n" + "\t\t{\"id\": " + c.getId() + ", \"nombre\": " + c.getNombre() + ", \"telefono\": "
+                        + c.getTelefono() + ", \"matricula\": " + c.getMatricula() + "}" + "\n\t]\n}";
                 escritor.write(linea);
                 escritor.newLine();
             }
