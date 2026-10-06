@@ -1,1 +1,5 @@
-	{"id": 1, "nombre": nicolas, "telefono": 123123, "matricula": 1244FDA}
+{
+	[
+	  {"id": 1, "nombre": "so", "telefono": "so", "matricula": "SO"}
+	]
+}

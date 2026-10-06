@@ -46,18 +46,19 @@ public class GestorArchivosJSON implements GestorArchivos {
         try (BufferedReader lector = Files.newBufferedReader(rutaClientes)) {
             String linea;
             while ((linea = lector.readLine()) != null) {
-                if (linea.equals("[")||linea.equals("]")|linea.isBlank()) continue;
+                if (linea.equals("\t[")||linea.equals("\t]")||linea.equals("{")||linea.equals("}")||linea.isBlank()) continue;
 
                 linea = linea.replace("{", "").replace("\"", "");
+                linea = linea.replace("}", "").replace("\"", "");
                 String[] campos = linea.split(",");
                 if (campos.length != 4) {
                     System.err.println("Error al leer cliente: " + linea);
                 }
                 try {
-                    int id = Integer.parseInt(campos[0].trim());
-                    String nombre = campos[1].trim();
-                    String telefono = campos[2].trim();
-                    String matricula = campos[3].trim();
+                    int id = Integer.parseInt(campos[0].split(":")[1].trim());
+                    String nombre = campos[1].split(":")[1].trim();
+                    String telefono = campos[2].split(":")[1].trim();
+                    String matricula = campos[3].split(":")[1].trim();
                     clientes.add(new Cliente(id, nombre, telefono, matricula));
                 } catch (NumberFormatException e) {
                     System.err.println("Error: " + linea);
@@ -73,12 +74,16 @@ public class GestorArchivosJSON implements GestorArchivos {
     @Override
     public void guardarClientes(List<Cliente> clientes) {
         try (BufferedWriter escritor = Files.newBufferedWriter(rutaClientes)) {
+            escritor.write("{\n");
+            escritor.write("\t[\n");
             for (Cliente c : clientes) {
-                String linea = "\t{\"id\": " + c.getId() + ", \"nombre\": " + c.getNombre() + ", \"telefono\": "
-                        + c.getTelefono() + ", \"matricula\": " + c.getMatricula() + "}";
+                String linea = "\t  {\"id\": " + c.getId() + ", \"nombre\": \"" + c.getNombre() + "\", \"telefono\": \""
+                        + c.getTelefono() + "\", \"matricula\": \"" + c.getMatricula() + "\"}";
                 escritor.write(linea);
                 escritor.newLine();
             }
+            escritor.write("\t]\n");
+            escritor.write("}");
         } catch (IOException e) {
             System.err.println("Error al guardar clientes: " + e.getMessage());
         }
