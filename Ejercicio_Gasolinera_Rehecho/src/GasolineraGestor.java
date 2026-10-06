@@ -13,7 +13,7 @@ public class GasolineraGestor {
     private final GestorArchivos gestorArchivos;
 
     public GasolineraGestor() {
-        this.gestorArchivos = new GestorArchivosCSV();
+        this.gestorArchivos = new GestorArchivosJSON();
         this.clientes = gestorArchivos.leerClientes();
         this.pagos = gestorArchivos.leerPagos();
         this.contadorId = calcularSiguienteId();
@@ -57,7 +57,7 @@ public class GasolineraGestor {
         if (matriculaRegistrada(matricula)) {
             System.out.println("La matrícula ya está registrada.");
 
-        } else {
+        } else{
             Cliente nuevoCliente = new Cliente(contadorId++, nombre, telefono, matricula);
             clientes.add(nuevoCliente);
             gestorArchivos.guardarClientes(clientes);
