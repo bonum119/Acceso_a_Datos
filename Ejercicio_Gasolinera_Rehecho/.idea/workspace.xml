@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ebe15654-5e2a-4b5d-a3f3-a1995d679b0e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GasolineraGestor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GasolineraGestor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GestorArchivosCSV.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GestorArchivosCSV.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GestorArchivosJSON.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GestorArchivosJSON.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../datosjson/clientes.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../datosjson/pagos.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/Acceso_a_Datos/GestorArchivosJSON.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/Acceso_a_Datos/GestorArchivosJSON.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/Acceso_a_Datos/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/Acceso_a_Datos/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +30,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "bonum119"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/bonum119/Acceso_a_Datos.git",
+    "accountId": "2a59fc2b-cb4d-44cb-a13c-e4ea1f8604d9"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0,
   &quot;fromUser&quot;: false
@@ -44,7 +62,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "practica2-json",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Users/Alumno Mañana/Desktop/Cosas_clase/Acceso_a_Datos/Ejercicio_Gasolinera_Rehecho",
     "node.js.detected.package.eslint": "true",

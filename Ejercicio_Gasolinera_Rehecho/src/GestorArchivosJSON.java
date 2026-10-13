@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class GestorArchivosJSON implements GestorArchivos {
 
     private void asegurarRuta() {
         try {
-            Path directorio = Path.of("datojson");
+            Path directorio = Path.of("datosjson");
             if (Files.notExists(directorio)) {
                 Files.createDirectories(directorio);
             }
