@@ -46,7 +46,7 @@ public class GestorArchivosJSON implements GestorArchivos {
         try (BufferedReader lector = Files.newBufferedReader(rutaClientes)) {
             String linea;
             while ((linea = lector.readLine()) != null) {
-                if (linea.equals("\t[")||linea.equals("\t]")||linea.equals("{")||linea.equals("}")||linea.isBlank()) continue;
+                if (linea.equals("\t[")||linea.equals("\"Clientes\":")||linea.equals("\t]")||linea.equals("{")||linea.equals("}")||linea.isBlank()) continue;
 
                 linea = linea.replace("{", "").replace("\"", "");
                 linea = linea.replace("}", "").replace("\"", "");
@@ -75,13 +75,23 @@ public class GestorArchivosJSON implements GestorArchivos {
     public void guardarClientes(List<Cliente> clientes) {
         try (BufferedWriter escritor = Files.newBufferedWriter(rutaClientes)) {
             escritor.write("{\n");
+            escritor.write("\"Clientes\":\n");
             escritor.write("\t[\n");
-            for (Cliente c : clientes) {
+
+            for (int i = 0; i < clientes.size(); i++) {
+                Cliente c = clientes.get(i);
+
                 String linea = "\t  {\"id\": " + c.getId() + ", \"nombre\": \"" + c.getNombre() + "\", \"telefono\": \""
                         + c.getTelefono() + "\", \"matricula\": \"" + c.getMatricula() + "\"}";
+
+                if (i < clientes.size() - 1) {
+                    linea = linea + ",";
+                }
+
                 escritor.write(linea);
                 escritor.newLine();
             }
+
             escritor.write("\t]\n");
             escritor.write("}");
         } catch (IOException e) {
@@ -98,7 +108,7 @@ public class GestorArchivosJSON implements GestorArchivos {
         try (BufferedReader lector = Files.newBufferedReader(rutaPagos)) {
             String linea;
             while ((linea = lector.readLine()) != null) {
-                if (linea.equals("\t[")||linea.equals("\t]")||linea.equals("{")||linea.equals("}")||linea.isBlank()) continue;
+                if (linea.equals("\t[")||linea.equals("\t]")||linea.equals("\"Pagos\":")||linea.equals("{")||linea.equals("}")||linea.isBlank()) continue;
 
                 linea = linea.replace("{", "").replace("\"", "");
                 linea = linea.replace("}", "").replace("\"", "");
@@ -129,17 +139,27 @@ public class GestorArchivosJSON implements GestorArchivos {
     public void guardarPagos(List<Pago> pagos) {
         try (BufferedWriter escritor = Files.newBufferedWriter(rutaPagos)) {
             escritor.write("{\n");
+            escritor.write("\"Pagos\":\n");
             escritor.write("\t[\n");
-            for (Pago p : pagos) {
+
+            for (int i = 0; i < pagos.size(); i++) {
+                Pago p = pagos.get(i);
+
                 String linea = "\t  {\"id\": " + p.getId() + ", \"idCliente\": \"" + p.getIdCliente() + "\", \"fecha\": \""
                         + p.getFecha() + "\", \"importe\": \"" + p.getImporte() + "\", \"litros\": \"" + p.getLitros() + "\", \"combustible\": \"" + p.getCombustible() + "\"}";
+
+                if (i < pagos.size() - 1) {
+                    linea = linea + ",";
+                }
+
                 escritor.write(linea);
                 escritor.newLine();
             }
+
             escritor.write("\t]\n");
             escritor.write("}");
         } catch (IOException e) {
-            System.err.println("Error al guardar clientes: " + e.getMessage());
+            System.err.println("Error al guardar pagos: " + e.getMessage());
         }
     }
 

@@ -1,0 +1,8 @@
+{
+"Pagos":
+	[
+	  {"id": 1, "idCliente": "1", "fecha": "2026-09-29", "importe": "50.0", "litros": "26.0", "combustible": "Diesel"},
+	  {"id": 2, "idCliente": "2", "fecha": "2026-09-28", "importe": "40.0", "litros": "21.0", "combustible": "Gasoil"},
+	  {"id": 3, "idCliente": "3", "fecha": "2027-03-12", "importe": "60.0", "litros": "10.0", "combustible": "Diesel"}
+	]
+}

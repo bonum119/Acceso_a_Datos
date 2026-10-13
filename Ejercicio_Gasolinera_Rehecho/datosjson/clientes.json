@@ -1,0 +1,8 @@
+{
+"Clientes":
+	[
+	  {"id": 1, "nombre": "Nicolás", "telefono": "697893916", "matricula": "8187GPY"},
+	  {"id": 2, "nombre": "Marcock", "telefono": "676424423", "matricula": "9966FWR"},
+	  {"id": 3, "nombre": "Peter", "telefono": "123456789", "matricula": "6767XDD"}
+	]
+}
