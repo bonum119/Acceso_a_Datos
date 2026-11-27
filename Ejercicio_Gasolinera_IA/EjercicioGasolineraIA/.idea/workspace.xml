@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01f04db5-ec87-4703-ad80-1a810b52c4fd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Ejercicio_Gasolinera_Rehecho/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ejercicio_Gasolinera_Rehecho/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="01f04db5-ec87-4703-ad80-1a810b52c4fd" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,7 +47,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "practica2-json",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
